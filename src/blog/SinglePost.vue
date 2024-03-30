@@ -16,6 +16,11 @@ const { blogposts } = storeToRefs(store);
 const post = blogposts.value.find((post) => post.id == route.params.id);
 
 // console.log(post);
+
+// Deleting a post
+function deletePost(id) {
+  store.deleteAPost(id);
+}
 </script>
 
 <template>
@@ -46,6 +51,16 @@ const post = blogposts.value.find((post) => post.id == route.params.id);
                 >Go Back</router-link
               >
             </div>
+
+            <div class="col-auto">
+              <router-link
+                @click="deletePost(route.params.id)"
+                :to="{ name: 'bloghome' }"
+                class="btn btn-primary"
+                >Delete Post</router-link
+              >
+            </div>
+
             <div class="col-auto">
               <router-link :to="{ name: 'editpost' }" class="btn btn-primary"
                 >Edit Post</router-link

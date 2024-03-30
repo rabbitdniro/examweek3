@@ -1,9 +1,9 @@
 import axios from "axios";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { defineStore } from "pinia";
 
 export const useBlogPosts = defineStore("blogposts", () => {
-  const blogposts = ref([]);
+  const blogposts = ref(null);
 
   const getPosts = () => {
     axios
@@ -16,8 +16,14 @@ export const useBlogPosts = defineStore("blogposts", () => {
       });
   };
 
+  const nextId = computed(() => blogposts.value.length + 1);
+
   const addNewPost = (post) => {
     blogposts.value.unshift(post);
   };
-  return { blogposts, getPosts, addNewPost };
+
+  const deleteAPost = (id) => {
+    blogposts.value = blogposts.value.filter((post) => post.id != id);
+  };
+  return { blogposts, getPosts, addNewPost, deleteAPost, nextId };
 });

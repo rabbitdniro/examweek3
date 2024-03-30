@@ -1,4 +1,5 @@
 <script setup>
+import { watch } from "vue";
 import PostCard from "../components/PostCard.vue";
 
 import { useBlogPosts } from "../blogdata/blogposts";
@@ -10,8 +11,17 @@ const store = useBlogPosts();
 // Destructuring blogPost reactive array to keep reactivity in Pinia store
 const { blogposts } = storeToRefs(store);
 
-// Populating posts data by calling methods from Pinia store
-store.getPosts();
+watch(
+  blogposts,
+
+  (oldValue) => {
+    if (!oldValue) {
+      store.getPosts();
+    }
+  },
+
+  { immediate: true }
+);
 </script>
 
 <template>

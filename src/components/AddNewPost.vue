@@ -6,12 +6,12 @@ import { useBlogPosts } from "../blogdata/blogposts";
 // import { storeToRefs } from "pinia";
 
 const store = useBlogPosts();
-// const { blogposts, addNewPost } = storeToRefs(store);
+// const { blogposts } = storeToRefs(store);
 
 const router = useRouter();
 
 const newPost = reactive({
-  id: 21,
+  id: store.nextId,
   title: null,
   body: null,
   userId: 0,
@@ -22,10 +22,11 @@ const newPost = reactive({
 function addPost() {
   // console.log(newPost);
   if (!newPost.title && !newPost.body) {
+    alert("Title and Body Cannot be Empty!");
   } else {
     store.addNewPost(newPost);
+    router.push({ name: "bloghome" });
   }
-  router.push({ name: "bloghome" });
 }
 </script>
 
